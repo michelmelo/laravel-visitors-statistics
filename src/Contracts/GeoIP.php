@@ -1,6 +1,6 @@
 <?php
 
-namespace Aleksa\LaravelVisitorsStatistics\Contracts;
+namespace MichelMelo\LaravelVisitorsStatistics\Contracts;
 
 interface GeoIP
 {
