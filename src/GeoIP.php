@@ -26,9 +26,12 @@ class GeoIP implements GeoIPContract
      */
     public function __construct(string $ipAddress)
     {
+
         try {
             $reader = new Reader(config('visitorstatistics.database_location'));
             $info = $reader->get($ipAddress);
+            Log::error($ipAddress);
+            Log::error(json_encode($info));
 
             if (isset($info['country'], $info['city'])) {
                 $this->country = $info['country']['names']['en'];

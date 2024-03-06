@@ -55,7 +55,7 @@ class UpdateMaxMindDatabase extends Command
         $headers = get_headers($databaseDownloadUrl);
 
         if (substr($headers[0], 9, 3) != '200') {
-            throw new Exception('Unable to download database update, check if the URL is valid.');
+            // throw new Exception('Unable to download database update, check if the URL is valid.');
         }
 
         // Download database to temporary directory

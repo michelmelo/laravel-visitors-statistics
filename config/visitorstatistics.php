@@ -45,7 +45,7 @@ return [
 
     'database_location' => storage_path('app/maxmind.mmdb'),
 
-    'database_download_url' => 'https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz',
+       'database_download_url' => 'https://git.io/GeoLite2-City.mmdb',
 
     'auto_update' => true,
 ];
