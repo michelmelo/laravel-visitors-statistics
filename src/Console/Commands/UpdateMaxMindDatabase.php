@@ -49,7 +49,7 @@ class UpdateMaxMindDatabase extends Command
         $this->comment('Updating MaxMind database...');
 
         $databaseDownloadUrl = config('visitorstatistics.database_download_url');
-        $saveLocation = config('visitorstatistics.database_location');
+        $saveLocation        = config('visitorstatistics.database_location');
 
         // Check if download URL returns headers 200
         $headers = get_headers($databaseDownloadUrl);

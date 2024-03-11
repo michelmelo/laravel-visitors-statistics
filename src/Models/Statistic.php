@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * App\Statistic
+ * App\Statistic.
  *
  * @property int $id
  * @property string $name
@@ -28,9 +28,9 @@ use Illuminate\Support\Carbon;
 class Statistic extends Model
 {
     public const TYPES = [
-        'all' => 'all',
+        'all'    => 'all',
         'unique' => 'unique',
-        'max' => 'max',
+        'max'    => 'max',
     ];
 
     /**
@@ -46,7 +46,7 @@ class Statistic extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'value', 'type'
+        'name', 'value', 'type',
     ];
 
     /**

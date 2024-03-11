@@ -2,9 +2,9 @@
 
 namespace MichelMelo\LaravelVisitorsStatistics\Http\Middleware;
 
-use MichelMelo\LaravelVisitorsStatistics\Tracker;
 use Closure;
 use Illuminate\Http\Request;
+use MichelMelo\LaravelVisitorsStatistics\Tracker;
 
 class RecordVisits
 {

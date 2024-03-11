@@ -2,9 +2,9 @@
 
 namespace MichelMelo\LaravelVisitorsStatistics;
 
-use MichelMelo\LaravelVisitorsStatistics\Contracts\Visitor as VisitorContract;
-use MichelMelo\LaravelVisitorsStatistics\Contracts\GeoIP as GeoIPContract;
 use DeviceDetector\DeviceDetector;
+use MichelMelo\LaravelVisitorsStatistics\Contracts\GeoIP as GeoIPContract;
+use MichelMelo\LaravelVisitorsStatistics\Contracts\Visitor as VisitorContract;
 
 class Visitor implements VisitorContract
 {
@@ -33,8 +33,8 @@ class Visitor implements VisitorContract
     public function __construct(string $ipAddress, string $userAgent, DeviceDetector $deviceDetector)
     {
         $this->ipAddress = $ipAddress;
-        $this->geoIP = resolve(GeoIPContract::class, [
-            'ipAddress' => $this->ipAddress
+        $this->geoIP     = resolve(GeoIPContract::class, [
+            'ipAddress' => $this->ipAddress,
         ]);
 
         $this->deviceDetector = $deviceDetector;

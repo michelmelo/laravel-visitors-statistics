@@ -2,10 +2,10 @@
 
 namespace MichelMelo\LaravelVisitorsStatistics;
 
-use MichelMelo\LaravelVisitorsStatistics\Contracts\GeoIP as GeoIPContract;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use MaxMind\Db\Reader;
+use MichelMelo\LaravelVisitorsStatistics\Contracts\GeoIP as GeoIPContract;
 
 class GeoIP implements GeoIPContract
 {
@@ -26,16 +26,15 @@ class GeoIP implements GeoIPContract
      */
     public function __construct(string $ipAddress)
     {
-
         try {
             $reader = new Reader(config('visitorstatistics.database_location'));
-            $info = $reader->get($ipAddress);
+            $info   = $reader->get($ipAddress);
             Log::error($ipAddress);
             Log::error(json_encode($info));
 
             if (isset($info['country'], $info['city'])) {
                 $this->country = $info['country']['names']['en'];
-                $this->city = $info['city']['names']['en'];
+                $this->city    = $info['city']['names']['en'];
             }
         } catch (Exception $ex) {
             Log::error($ex->getMessage());

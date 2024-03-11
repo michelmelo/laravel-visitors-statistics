@@ -20,7 +20,8 @@
         "maxmind-db/reader": "^1.4"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.8"
+        "friendsofphp/php-cs-fixer": "^3.51",
+        "orchestra/testbench": "^8.21"
     },
     "autoload": {
         "psr-4": {

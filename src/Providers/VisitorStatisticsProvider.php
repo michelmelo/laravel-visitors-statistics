@@ -2,14 +2,14 @@
 
 namespace MichelMelo\LaravelVisitorsStatistics\Providers;
 
-use MichelMelo\LaravelVisitorsStatistics\Console\Commands\UpdateMaxMindDatabase;
-use MichelMelo\LaravelVisitorsStatistics\GeoIP;
-use MichelMelo\LaravelVisitorsStatistics\Http\Middleware\RecordVisits;
-use MichelMelo\LaravelVisitorsStatistics\Visitor;
 use DeviceDetector\DeviceDetector;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use MichelMelo\LaravelVisitorsStatistics\Console\Commands\UpdateMaxMindDatabase;
+use MichelMelo\LaravelVisitorsStatistics\GeoIP;
+use MichelMelo\LaravelVisitorsStatistics\Http\Middleware\RecordVisits;
+use MichelMelo\LaravelVisitorsStatistics\Visitor;
 
 class VisitorStatisticsProvider extends ServiceProvider
 {
@@ -52,7 +52,7 @@ class VisitorStatisticsProvider extends ServiceProvider
 
         // Register commands and set task scheduling
         $this->commands([
-            UpdateMaxMindDatabase::class
+            UpdateMaxMindDatabase::class,
         ]);
         $this->app->booted(function () {
             // Since maxmind database is updated every first Thursday of the month

@@ -2,11 +2,11 @@
 
 namespace MichelMelo\LaravelVisitorsStatistics\Http\Controllers;
 
-use MichelMelo\LaravelVisitorsStatistics\Models\Visitor;
-use MichelMelo\LaravelVisitorsStatistics\Models\Statistic;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use MichelMelo\LaravelVisitorsStatistics\Models\Statistic;
+use MichelMelo\LaravelVisitorsStatistics\Models\Visitor;
 
 class StatisticsController extends Controller
 {
@@ -51,7 +51,7 @@ class StatisticsController extends Controller
     public function getTotalStatistics(int $year, ?int $month = null): JsonResponse
     {
         return response()->json([
-            'all' => $this->retrieveStatistics(Statistic::TYPES['all'], $year, $month),
+            'all'    => $this->retrieveStatistics(Statistic::TYPES['all'], $year, $month),
             'unique' => $this->retrieveStatistics(Statistic::TYPES['unique'], $year, $month),
         ]);
     }
@@ -63,7 +63,7 @@ class StatisticsController extends Controller
      */
     public function getCountriesStatistics(): JsonResponse
     {
-        $visitors = Visitor::getVisitorCountPerCountry();
+        $visitors     = Visitor::getVisitorCountPerCountry();
         $visitorCount = Visitor::count();
 
         foreach ($visitors as $visitor) {
@@ -90,9 +90,9 @@ class StatisticsController extends Controller
             $min = Statistic::min('created_at');
             $max = Statistic::max('created_at');
 
-            if (!is_null($min)) {
+            if (! is_null($min)) {
                 $startYear = Carbon::createFromTimeString($min)->year;
-                $endYear = Carbon::createFromTimeString($max)->year;
+                $endYear   = Carbon::createFromTimeString($max)->year;
 
                 for ($i = $startYear; $i <= $endYear; $i++) {
                     $result[] = $i;
@@ -104,14 +104,14 @@ class StatisticsController extends Controller
             }
         } else {
             $startDate = Carbon::createFromDate($year, 1, 1);
-            $endDate = Carbon::createFromDate($year, 12, 31);
+            $endDate   = Carbon::createFromDate($year, 12, 31);
 
             $min = Statistic::whereBetween('created_at', [$startDate, $endDate])->min('created_at');
             $max = Statistic::whereBetween('created_at', [$startDate, $endDate])->max('created_at');
 
-            if (!is_null($min)) {
+            if (! is_null($min)) {
                 $startMonth = Carbon::createFromTimeString($min)->month;
-                $endMonth = Carbon::createFromTimeString($max)->month;
+                $endMonth   = Carbon::createFromTimeString($max)->month;
 
                 for ($i = $startMonth; $i <= $endMonth; $i++) {
                     $result[] = $i;
@@ -120,7 +120,7 @@ class StatisticsController extends Controller
         }
 
         return response()->json([
-            'data' => $result
+            'data' => $result,
         ]);
     }
 
@@ -137,13 +137,13 @@ class StatisticsController extends Controller
     {
         if (is_null($month)) {
             $startDate = Carbon::createFromDate($year, 1, 1)->startOfDay();
-            $endDate = $startDate->copy()->endOfYear();
+            $endDate   = $startDate->copy()->endOfYear();
         } else {
             $startDate = Carbon::createFromDate($year, $month, 1)->startOfDay();
-            $endDate = $startDate->copy()->endOfMonth();
+            $endDate   = $startDate->copy()->endOfMonth();
         }
 
-        $data = [];
+        $data       = [];
         $statistics = Statistic::select(['value', 'created_at'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->where('type', $type)

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
- * App\Visitor
+ * App\Visitor.
  *
  * @property int $id
  * @property string $ip
@@ -48,7 +48,7 @@ class Visitor extends Model
      * @var array
      */
     protected $fillable = [
-        'ip', 'country', 'city', 'device', 'browser'
+        'ip', 'country', 'city', 'device', 'browser',
     ];
 
     /**
@@ -65,7 +65,7 @@ class Visitor extends Model
     }
 
     /**
-     * Get the number of online users
+     * Get the number of online users.
      *
      * @param int $minutes
      *

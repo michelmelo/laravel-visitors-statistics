@@ -2,13 +2,13 @@
 
 namespace MichelMelo\LaravelVisitorsStatistics;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use Illuminate\Http\Request;
 use MichelMelo\LaravelVisitorsStatistics\Contracts\Tracker as TrackerContract;
 use MichelMelo\LaravelVisitorsStatistics\Contracts\Visitor as VisitorContact;
 use MichelMelo\LaravelVisitorsStatistics\Models\Statistic;
 use MichelMelo\LaravelVisitorsStatistics\Models\Visitor as VisitorModel;
-use Carbon\Carbon;
-use Carbon\CarbonInterface;
-use Illuminate\Http\Request;
 
 class Tracker implements TrackerContract
 {
@@ -37,7 +37,7 @@ class Tracker implements TrackerContract
         $this->request = $request;
         $this->visitor = resolve(VisitorContact::class, [
             'ipAddress' => $this->request->header('HTTP_CF_CONNECTING_IP') ?? $this->request->getClientIp(),
-            'userAgent' => $this->request->userAgent()
+            'userAgent' => $this->request->userAgent(),
         ]);
         $this->today = Carbon::today();
     }
@@ -66,7 +66,7 @@ class Tracker implements TrackerContract
      */
     public function shouldTrackUser(): bool
     {
-        if ((config('visitorstatistics.track_authenticated_users') === false && !is_null(auth()->user())) ||
+        if ((config('visitorstatistics.track_authenticated_users') === false && ! is_null(auth()->user())) ||
             (config('visitorstatistics.track_ajax_request') === false && request()->ajax()) ||
             $this->request->is(config('visitorstatistics.login_route_path')) ||
             $this->visitor->isBot()) {
@@ -84,10 +84,10 @@ class Tracker implements TrackerContract
     public function getVisitorInformation(): array
     {
         return [
-            'ip' => $this->visitor->getIp(),
+            'ip'      => $this->visitor->getIp(),
             'country' => $this->visitor->getCountry(),
-            'city' => $this->visitor->getCity(),
-            'device' => $this->visitor->getDevice(),
+            'city'    => $this->visitor->getCity(),
+            'device'  => $this->visitor->getDevice(),
             'browser' => $this->visitor->getBrowser(),
         ];
     }
@@ -121,7 +121,7 @@ class Tracker implements TrackerContract
      */
     private function updateStatistics(): void
     {
-        $rowName = sprintf('%s_%s', $this->today->format('Y_m_d'), Statistic::TYPES['all']);
+        $rowName   = sprintf('%s_%s', $this->today->format('Y_m_d'), Statistic::TYPES['all']);
         $statistic = Statistic::firstOrNew([
             'name' => $rowName,
             'type' => Statistic::TYPES['all'],
@@ -135,7 +135,7 @@ class Tracker implements TrackerContract
      */
     private function updateUniqueStatistics(): void
     {
-        $rowName = sprintf('%s_%s', $this->today->format('Y_m_d'), Statistic::TYPES['unique']);
+        $rowName   = sprintf('%s_%s', $this->today->format('Y_m_d'), Statistic::TYPES['unique']);
         $statistic = Statistic::firstOrNew([
             'name' => $rowName,
             'type' => Statistic::TYPES['unique'],
@@ -151,7 +151,7 @@ class Tracker implements TrackerContract
     {
         $max = Statistic::maxVisitors();
 
-        $endDate = Carbon::now();
+        $endDate   = Carbon::now();
         $startDate = $endDate->copy()->subMinutes(15);
 
         $currentMax = VisitorModel::whereBetween('updated_at', [$startDate, $endDate])->count();
